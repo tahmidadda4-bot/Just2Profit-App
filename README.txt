@@ -1,0 +1,1 @@
+Fixed Just2Profit Android starter. Upload the contents to the GitHub repo, then run Actions -> Build Just2Profit APK -> Run workflow. This is UI starter only; backend/database is not connected yet.

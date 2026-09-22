@@ -1,4 +1,4 @@
-name: Extract Just2Profit
+name: Unzip Just2Profit
 
 on:
   workflow_dispatch:
@@ -7,26 +7,28 @@ permissions:
   contents: write
 
 jobs:
-  extract:
+  unzip:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Extract ZIP
+      - name: Unzip ZIP
         run: |
-          unzip -o Just2Profit-Starter.zip
-          if [ -d "Just2Profit" ]; then
-            cp -r Just2Profit/. .
-          fi
-          rm -rf Just2Profit
-          rm -f Just2Profit-Starter.zip
+          mkdir -p extracted
+          unzip -o Just2Profit-Fixed.zip -d extracted
+
+      - name: Move files
+        run: |
+          cp -r extracted/Just2Profit-Fixed/* .
+          rm -rf extracted
+          rm -f Just2Profit-Fixed.zip
 
       - name: Commit files
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add .
-          git commit -m "Extract Just2Profit project [skip ci]" || echo "Nothing to commit"
+          git commit -m "Extract Just2Profit project" || echo "Nothing to commit"
           git push
